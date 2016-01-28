@@ -1,9 +1,4 @@
 "use strict";
-/**
- * watching : Lynda – Building a Polling App with Socket IO and React.js
- * currenty at : 028 Loading and diplaying questions
- */
-
 
 var express = require('express');
 var app = express();
