@@ -9,11 +9,17 @@ var Header = React.createClass({
 
   render() {
     return (
-      <header>
-      <h1>{this.props.title}</h1>
-      <p>{this.props.speaker}</p>
-      <span id="connection-status" className={this.props.status}></span>
-      </header>
+      <div>
+        <div className="connection-status-container">
+          <span id="connection-status" className={this.props.status}></span>
+        </div>
+        <header>
+
+        <h1>{this.props.title}</h1>
+        <p>{this.props.speaker}</p>
+
+        </header>
+      </div>
     );
   }
 });

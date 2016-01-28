@@ -1,29 +1,35 @@
+"use strict";
 /**
  * watching : Lynda – Building a Polling App with Socket IO and React.js
  * currenty at : 028 Loading and diplaying questions
  */
 
-"use strict";
+
 var express = require('express');
 var app = express();
-
 var _ = require('underscore');
+var server = app.listen(3000);
+var io = require('socket.io').listen(server);
 
 
 
 app.use(express.static('./public'));
 app.use(express.static('./node_modules/bootstrap/dist'));
 
-var server = app.listen(3000);
-var io = require('socket.io').listen(server);
 
 
 var connections = [];
-
 var audience = [];
 var title = "No presentation at the moment";
 var speaker = {};
-
+var questions = require('./app-questions');
+var currentQuestion = false;
+var results = {
+  a: 0,
+  b: 0,
+  c: 0,
+  d: 0
+};
 
 io.sockets.on('connection', function(socket) {
 
@@ -39,12 +45,15 @@ io.sockets.on('connection', function(socket) {
       audience.splice(audience.indexOf(disconnectedMember), 1);
       io.sockets.emit('audience', audience);
       console.log('Left: %s (%s audience members)', disconnectedMember.name, audience.length);
-    } else if(this.id === speaker.id){
-      console.log("%s has left. '%s' is over.",speaker.name,title);
+    } else if (this.id === speaker.id) {
+      console.log("%s has left. '%s' is over.", speaker.name, title);
       speaker = {};
       title = "No presentation at the moment";
 
-      io.sockets.emit('end',{title:title,speaker:''});
+      io.sockets.emit('end', {
+        title: title,
+        speaker: ''
+      });
     }
 
     //remove socket that has been disconnected
@@ -80,10 +89,34 @@ io.sockets.on('connection', function(socket) {
     console.log("Presentation Started '%s' by '%s'", title, speaker.name);
   });
 
+
+
+  socket.on('ask', function(question) {
+    currentQuestion = question;
+    results = {
+      a: 0,
+      b: 0,
+      c: 0,
+      d: 0
+    };
+    io.sockets.emit('ask', currentQuestion);
+    console.log("Question Asked: '%s", question.q);
+  });
+
+  socket.on('answer', function(payload) {
+    results[payload.choice]++;
+    io.sockets.emit('results',results);
+    console.log("Answer: '%s' %j", payload.choice, results);
+  });
+
   socket.emit('welcome', {
     title: title,
     audience: audience,
-    speaker: speaker.name
+    speaker: speaker.name,
+    questions: questions,
+    currentQuestion: currentQuestion,
+    results: results
+
   });
 
   connections.push(socket);

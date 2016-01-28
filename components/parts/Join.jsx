@@ -1,3 +1,5 @@
+"use strict";
+
 var React = require('react');
 var Link = require('react-router').Link;
 var ReactDOM = require('react-dom');
@@ -16,6 +18,7 @@ var Join = React.createClass({
       <input ref="fullName" className="form-control" placeholder="Enter your full name..." required/>
       <button  className="join-button">Join</button>
       <Link to="/speaker">Join as speaker</Link>
+      <Link to="/board">Go to the board</Link>
       </form>
       );
     }

@@ -13,10 +13,12 @@ var APP = React.createClass({
         title: '',
         member: {},
         audience: [],
-        speaker:''
-      }
+        speaker: '',
+        questions: [],
+        currentQuestion: false,
+        results: {}
+      };
     },
-
 
     componentWillMount() {
       this.socket = io();
@@ -25,8 +27,10 @@ var APP = React.createClass({
       this.socket.on('welcome', this.updateState);
       this.socket.on('joined', this.joined);
       this.socket.on('audience', this.updateAudience);
-      this.socket.on('start',this.start);
-      this.socket.on('end',this.updateState);
+      this.socket.on('start', this.start);
+      this.socket.on('end', this.updateState);
+      this.socket.on('ask', this.ask);
+      this.socket.on('results', this.updateResults);
     },
 
     emit(eventName, payload) {
@@ -40,11 +44,14 @@ var APP = React.createClass({
       } else {
         member = null;
       }
-      console.log('member',member);
+      console.log('member', member);
       if (member && member.type === 'audience') {
-        this.emit('join', member)
-      }else if(member && member.type === 'speaker') {
-        this.emit('start',{name:member.name,title:sessionStorage.title});
+        this.emit('join', member);
+      } else if (member && member.type === 'speaker') {
+        this.emit('start', {
+          name: member.name,
+          title: sessionStorage.title
+        });
       }
       this.setState({
         status: 'connected'
@@ -54,8 +61,8 @@ var APP = React.createClass({
     disconnect() {
       this.setState({
         status: 'disconnected',
-        title:'disconnected',
-        speaker:''
+        title: 'disconnected',
+        speaker: ''
       });
     },
     updateState(serverState) {
@@ -75,14 +82,26 @@ var APP = React.createClass({
       });
     },
 
-    start(presentation){
-      if(this.state.member.type === 'speaker'){
+    start(presentation) {
+      if (this.state.member.type === 'speaker') {
         sessionStorage.title = presentation.title;
       }
       this.setState(presentation);
     },
 
+    ask(question) {
+      sessionStorage.answer = '';
+      this.setState({
+        currentQuestion: question,
+        results: {a:0,b:0,c:0,d:0}
+      });
+    },
 
+    updateResults(data) {
+      this.setState({
+        results: data
+      });
+    },
 
     render() {
       return (

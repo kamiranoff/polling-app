@@ -1,68 +1,98 @@
 html,
 body {
-    padding: 0;
-    margin: 0;
+  padding: 0;
+  margin: 0;
+  background-color: rgb(38, 50, 56);
+  color: #ededed;
+  font-family: Roboto, Tahoma, sans-serif;
+}
+body{
+    padding:0vh;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 100;
+}
+
+header{
+    background-color: #ededed;
+    color:rgb(38, 50, 56);
+    padding:1em;
+}
+a{color:#ACE;}
+
+.connection-status-container{
+
 }
 
 #connection-status {
-    height: 35px;
-    width: 35px;
-    border-radius: 50%;
-    -webkit-border-radius: 50%;
-    padding: 0;
-    margin: 20px;
-    display: block;
+    width: 100%;
+  height: 10px;
+  display:block;
 }
 
 #connection-status.connected {
-    background-color: green;
+  background-color: #80CBC4;
 }
 
 #connection-status.disconnected {
-    background-color: red;
+  background-color: #F55;
 }
-
+button{
+    background-color: rgba(128, 203, 196, 0.9);
+    padding:10px 20px;
+    border-radius: 3px;
+    border:none;
+    box-shadow: 1px 1px rgba(200,200,200,0.3);
+    margin:5px;
+}
 form button {
-    margin: 1em 0;
+  margin: 1em 0;
 }
 
 form label {
-    font-size: 1.5em;
-    margin: 1em 0 0;
+  font-size: 1.5em;
+  margin: 1em 0 0;
 }
 
 div#not-found a {
-    display: block;
-    clear: both;
+  display: block;
+  clear: both;
 }
 
 div#not-found a,
 form a {
-    position: relative;
-    left: 15px;
-    top: 10px;
-    padding-left: 20px;
+  position: relative;
+  left: 15px;
+  top: 10px;
+  padding-left: 20px;
 }
-
 
 #questions>div>span {
-    padding: .5em;
-    margin: .5em;
-    display: block;
-    cursor: pointer;
-    border: 2px solid green;
+  padding: .5em;
+  margin: .5em;
+  display: block;
+  cursor: pointer;
+  border: 2px solid rgba(128, 203, 196, 0.9);
 }
 
-#questions>div>span:hover {
-    background-color: yellow;
-}
-
-#currentQuestion button {
-    margin: 2px 0;
-    cursor: pointer;
-}
 
 #currentQuestion button:hover {
-    opacity: 0.9;
+  background-color: rgba(128, 203, 196, 1.0);
 }
+
+
+
+
+
+
+
+
+
+
 
