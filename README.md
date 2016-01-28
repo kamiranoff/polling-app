@@ -2,8 +2,16 @@
 
 ## React & socket.io
 
+## Technology stack
+es6<br/>
+React<br/>
+socket.io<br/>
+d3<br/>
 
-### Start
+
+
+### Usage
 $ npm install
 ###
 $ npm start
+
