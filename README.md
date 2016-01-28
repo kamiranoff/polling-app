@@ -1,3 +1,8 @@
-# polling-app
+# A simple polling-app
 
-# React & socket.io
+## React & socket.io
+
+
+### Start
+$ npm install
+$ npm start
